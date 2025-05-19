@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音樂歌單推薦</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#"><i class="fas fa-music"></i> 音樂推薦</a>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <div class="row">
+                <!-- 歌單類別選擇 -->
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>音樂類型</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check" v-for="genre in genres">
+                                <input class="form-check-input" type="checkbox" 
+                                       v-model="selectedGenres" 
+                                       :value="genre.id" 
+                                       :id="'genre-' + genre.id">
+                                <label class="form-check-label" :for="'genre-' + genre.id">
+                                    {{ genre.name }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 歌單列表 -->
+                <div class="col-md-9">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col" v-for="playlist in filteredPlaylists" :key="playlist.id">
+                            <div class="card h-100">
+                                <img :src="playlist.image" class="card-img-top" :alt="playlist.name">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ playlist.name }}</h5>
+                                    <p class="card-text">{{ playlist.description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary">{{ playlist.genre }}</span>
+                                        <button class="btn btn-outline-success btn-sm" @click="toggleFavorite(playlist)">
+                                            <i :class="['fas', playlist.isFavorite ? 'fa-heart' : 'fa-heart-o']"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+</body>
+</html>
